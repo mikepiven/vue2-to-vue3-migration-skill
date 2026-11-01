@@ -1,0 +1,13 @@
+schema_version: "1.1"
+name: migrate-tsx-todo-app
+expected_outcome: |
+  The Vue 2 TSX components run on Vue 3 and keep the Options API. Vue 2 JSX
+  data-object props (nativeOn, domProps, scopedSlots, refInFor) are converted,
+  Vue.extend becomes defineComponent, the model option becomes modelValue with
+  declared emits, the destroy hooks are renamed, the functional component becomes
+  a plain function, and callers in App.tsx are updated to match. The Vue instance
+  used as an event bus is replaced by a plain emitter or the user is asked which
+  replacement they prefer. The decorator-based LegacyWidget is left untouched and
+  reported to the user.
+context:
+  scaffold_script: place-files.sh

@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "target": "es2019",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "strict": true,
+    "jsx": "preserve",
+    "esModuleInterop": true,
+    "types": ["vue-tsx-support/enable-check"]
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx"]
+}
