@@ -1,0 +1,12 @@
+{
+  "name": "todo-app-vue3",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "vue": "^3.5.0"
+  },
+  "devDependencies": {
+    "@vue/babel-plugin-jsx": "^1.2.0",
+    "typescript": "^5.6.0"
+  }
+}
