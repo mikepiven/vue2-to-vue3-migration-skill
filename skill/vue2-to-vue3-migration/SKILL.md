@@ -21,11 +21,11 @@ and a test run, keeps every failure attributable to one change.
 1. **Select the target stack.** Pick a preset (see "Target presets") and confirm
    the real current versions against the registry.
 2. **Inventory.** Scan the project and list every incompatibility, grouped by
-   area (components, store, router, Nuxt config, build).
+   area (components, store, router, Nuxt config, build). The detection patterns
+   for TSX/JSX components are at the end of `references/tsx-jsx.md`.
 3. **Plan.** Turn the inventory into an ordered list of changes with a rollback
    point after each phase.
-4. **Migrate.** Apply the changes phase by phase: dependencies, Nuxt, router,
-   store, then components.
+4. **Migrate.** Apply the changes phase by phase (see "Migrating components").
 5. **Verify.** Build, type-check and run the existing tests after every phase,
    and report what remains.
 
@@ -35,6 +35,25 @@ The user selects the target stack by naming a preset. Details, versions and the
 verification procedure live in `references/presets.md`; read that file during
 phase 1.
 
+## Migrating components
+
+Components are the most logic-heavy part of the migration, so they get two
+separate passes. Doing them separately matters because the first pass is
+mechanical and the second is a redesign; mixing them makes a regression
+impossible to attribute.
+
+1. **Make components run on Vue 3.** Read `references/tsx-jsx.md` and apply it
+   to every `.tsx`, `.jsx` and `render()` component, keeping the Options API
+   structure. Also rename `beforeDestroy` to `beforeUnmount` and `destroyed` to
+   `unmounted`. Update the callers of every component whose props or events
+   changed, not only the component itself.
+2. **Convert to Composition API, only if the user asked.** Read
+   `references/options-to-composition-tsx.md` and convert one component per
+   commit. Skip this pass when the user wants to keep the Options API.
+
+If a file uses `vue-property-decorator` or `vue-class-component`, stop and ask
+the user how to proceed; these libraries are not covered by the references.
+
 ## Scope
 
 In scope: Vue 2.6 and 2.7 projects, Options API to Composition API, TSX/JSX
@@ -42,3 +61,7 @@ components, Nuxt 2 migration, Vuex to Pinia, Vue Router 3 to 4.
 
 Out of scope: SFC template migration, UI library migrations, visual regression
 testing.
+
+Not yet covered by references: Nuxt 2 configuration and data fetching, Vuex to
+Pinia, Vue Router 3 to 4. For these areas, say so to the user and follow the
+official migration guides until the references exist.
