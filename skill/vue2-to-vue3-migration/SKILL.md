@@ -21,13 +21,19 @@ and a test run, keeps every failure attributable to one change.
 1. **Select the target stack.** Pick a preset (see "Target presets") and confirm
    the real current versions against the registry.
 2. **Inventory.** Scan the project and list every incompatibility, grouped by
-   area (components, store, router, Nuxt config, build). The detection patterns
-   for TSX/JSX components are at the end of `references/tsx-jsx.md`.
+   area (components, store, router, Nuxt config, build). For TSX/JSX components
+   run `python scripts/scan_tsx.py <project-dir> --format json` from this skill's
+   folder and group the findings by file and rule. The scanner is a fast first
+   pass: it does not read template files or understand runtime behavior, so open
+   the files it flags and check the surrounding code. The patterns it looks for
+   are listed at the end of `references/tsx-jsx.md`.
 3. **Plan.** Turn the inventory into an ordered list of changes with a rollback
    point after each phase.
 4. **Migrate.** Apply the changes phase by phase (see "Migrating components").
-5. **Verify.** Build, type-check and run the existing tests after every phase,
-   and report what remains.
+5. **Verify.** Build, type-check and run the existing tests after every phase.
+   Run the scanner again with `--fail-on error`; the only errors that may remain
+   are files the user decided to leave alone (for example decorator-based class
+   components). Report what remains.
 
 ## Target presets
 

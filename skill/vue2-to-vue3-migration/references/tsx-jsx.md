@@ -284,7 +284,8 @@ JSX { ... } }` and the `vue-tsx-support/enable-check` import.
 
 ## Detection patterns for the inventory phase
 
-Search the project for these patterns and list every hit:
+`scripts/scan_tsx.py` implements this table, so run it instead of searching by
+hand. The table documents what it looks for and why.
 
 | Pattern | Meaning |
 |---------|---------|
@@ -302,3 +303,8 @@ Search the project for these patterns and list every hit:
 | `\$on\(`, `\$off\(`, `\$once\(` | removed event API |
 | `vue-tsx-support` | remove dependency |
 | `vue-property-decorator`, `vue-class-component` | decorators; ask the user |
+| `{this.$slots.x}`, `this.$slots.x.length`, `h('div', this.$slots.x)` | slot used as an array of vnodes; call it |
+| `beforeDestroy`, `destroyed` | hooks never called in Vue 3 |
+| `new Vue()` | probably an event bus; ask the user |
+| `tsconfig.json` with `jsx` but no `jsxImportSource` | JSX types missing on Vue 3.4+ |
+| `vue-tsx-support`, `@vue/babel-preset-jsx` and similar in `package.json` | removed tooling |
