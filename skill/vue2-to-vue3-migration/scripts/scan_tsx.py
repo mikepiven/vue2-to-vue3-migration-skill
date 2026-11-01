@@ -64,6 +64,13 @@ RULES: list[Rule] = [
         f"{TSX_DOC}#slots",
     ),
     _rule(
+        "slots-not-called",
+        "warning",
+        r"\$slots\.\w+\b(?!\s*\??\.?\()",
+        "in Vue 3 every slot is a function; call it with this.$slots.name?.() instead of using it as an array of vnodes",
+        f"{TSX_DOC}#slots",
+    ),
+    _rule(
         "listeners",
         "error",
         r"\$listeners\b",
