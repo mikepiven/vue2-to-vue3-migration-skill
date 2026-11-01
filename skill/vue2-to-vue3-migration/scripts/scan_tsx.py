@@ -66,8 +66,11 @@ RULES: list[Rule] = [
     _rule(
         "slots-not-called",
         "warning",
-        r"\$slots\.\w+\b(?!\s*\??\.?\()",
-        "in Vue 3 every slot is a function; call it with this.$slots.name?.() instead of using it as an array of vnodes",
+        r"\{\s*(?:this\.)?\$slots\.\w+\s*\}"
+        r"|\$slots\.\w+\.(?:length|map|filter|forEach|some|every|find|concat)\b"
+        r"|\.\.\.\s*(?:this\.)?\$slots\.\w+\b"
+        r"|,\s*(?:this\.)?\$slots\.\w+\s*\)",
+        "slot used as an array of vnodes; in Vue 3 every slot is a function, call it with this.$slots.name?.()",
         f"{TSX_DOC}#slots",
     ),
     _rule(
